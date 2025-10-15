@@ -1,7 +1,10 @@
-# Base image
-FROM python:3.9-slim
+# Base image - Updated for Chatterbox TTS (requires Python 3.11+)
+# Multi-stage build for optional GPU support
+FROM python:3.11-slim
 
 # Install system dependencies, build tools, and libraries
+# Added: libsndfile1, libsox-fmt-all for audio processing (torchaudio)
+# Added: libgomp1 for PyTorch CPU support
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     wget \
@@ -53,6 +56,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpangocairo-1.0-0 \
     libpangoft2-1.0-0 \
     libgtk-3-0 \
+    libsndfile1 \
+    libsox-fmt-all \
+    libgomp1 \
+    sox \
     && rm -rf /var/lib/apt/lists/*
 
 # Install SRT from source (latest version using cmake)
@@ -173,7 +180,9 @@ RUN mkdir -p ${WHISPER_CACHE_DIR}
 # Copy the requirements file first to optimize caching
 COPY requirements.txt .
 
-# Install Python dependencies, upgrade pip 
+# Install Python dependencies, upgrade pip
+# Note: PyTorch CPU version will be installed by default
+# For GPU support, modify requirements.txt to use torch with CUDA
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install openai-whisper && \

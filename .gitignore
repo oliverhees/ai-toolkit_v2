@@ -1,4 +1,62 @@
-.env_variables.json
-.DS_Store
-.env_shell.json
+# AI Toolkit - Git Ignore
+# Author: NetzPrinz aka Oliver Hees
+
+# Environment Variables
 .env
+.env.*
+.env_variables.json
+.env_shell.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+logs/
+
+# Storage & Cache
+storage/
+tmp/
+whisper_cache/
+*.pt
+*.pth
+*.bin
+*.onnx
+*.safetensors
+
+# Local Development
+local.sh
+test_*.py
+*.bak
+*.tmp
+
+# OS
+Thumbs.db

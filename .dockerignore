@@ -1,25 +1,76 @@
-# Ignore Python cache and compiled files
+# Docker ignore file for AI Toolkit
+# Updated by: NetzPrinz aka Oliver Hees
+
+# Python cache and compiled files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
 
-# Ignore environment and config files
+# Environment and config files
 .env
+.env.*
 .env_variables.json
 .env_shell.json
 
-# Ignore version control and editor files
+# Version control and editor files
 .git/
+.gitignore
+.github/
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
+Thumbs.db
 
-# Ignore scripts and documentation not needed in image
+# Scripts and documentation not needed in image
 README.md
 local.sh
 generate_vector.sh
 docs/
+*.md
+!requirements.txt
 
-# Ignore repository/configuration files not needed in image
-.github/
-.gitignore
+# Docker files (not needed in container)
+Dockerfile
+docker-compose*.yml
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+test_*.py
+
+# Local storage (runtime data)
+storage/
+logs/
+tmp/
+*.log
+
+# Model caches (will be downloaded in container)
+whisper_cache/
+*.pt
+*.pth
+*.bin
+*.onnx
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Development
+*.bak
+*.tmp

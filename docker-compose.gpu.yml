@@ -1,0 +1,24 @@
+# Docker Compose with GPU Support for Chatterbox TTS
+# Author: NetzPrinz aka Oliver Hees
+#
+# This configuration enables NVIDIA GPU support for Chatterbox TTS
+# Requires: nvidia-docker2 installed on host
+#
+# Usage:
+#   docker-compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
+
+services:
+  ncat:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    # Note: If you want to use specific GPU index:
+    # environment:
+    #   - NVIDIA_VISIBLE_DEVICES=0  # Use first GPU only

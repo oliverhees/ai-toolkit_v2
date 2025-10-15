@@ -1,337 +1,396 @@
+# NetzPrinz AI Toolkit
 
-![Original Logo Symbol](https://github.com/user-attachments/assets/75173cf4-2502-4710-998b-6b81740ae1bd)
-
-# No-Code Architects Toolkit API 
-
-Tired of wasting thousands of dollars on API subscriptions to support all your automations? What if there was a free alternative?
-
-The 100% FREE No-Code Architects Toolkit API processes different types of media. It is built in Python using Flask.
-
-## What Can It Do?
-
-The API can convert audio files. It creates transcriptions of content. It translates content between languages. It adds captions to videos. It can do very complicated media processing for content creation. The API can also manage files across multiple cloud services like Google Drive, Amazon S3, Google Cloud Storage, and Dropbox.
-
-You can deploy this toolkit in several ways. It works with Docker. It runs on Google Cloud Platform. It functions on Digital Ocean. You can use it with any system that hosts Docker.
-
-Easily replace services like ChatGPT Whisper, Cloud Convert, Createomate, JSON2Video, PDF(dot)co, Placid and OCodeKit.
-
-## 👥 No-Code Architects Community
-
-Want help? Join a supportive community and get dedicated tech support.
-
-Join the ONLY community where you learn to leverage AI automation and content to grow your business (and streamline your biz).
-
-Who's this for?
-- Coaches and consultants
-- AI Automation agencies
-- SMMA & Content agencies
-- SaaS Startup Founders
-
-Get courses, community, support, daily calls and more.
-
-Join the **[No-Code Architects Community](https://www.skool.com/no-code-architects)** today!
+**Author:** NetzPrinz aka Oliver Hees
+**Based on:** [no-code-architects-toolkit](https://github.com/stephengpope/no-code-architects-toolkit) by Stephen G. Pope
 
 ---
 
-## API Endpoints
+## 🚀 Overview
 
-Each endpoint is supported by robust payload validation and detailed API documentation to facilitate easy integration and usage.
+The NetzPrinz AI Toolkit is an advanced, open-source API platform for media processing, text-to-speech, and voice cloning. Built on Python/Flask, it provides a comprehensive suite of tools for content creators, automation agencies, and AI developers.
 
-### Audio
+### Key Features
 
-- **[`/v1/audio/concatenate`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/audio/concatenate.md)**
-  - Combines multiple audio files into a single audio file.
-
-### Code
-
-- **[`/v1/code/execute/python`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/code/execute/execute_python.md)**
-  - Executes Python code remotely and returns the execution results.
-
-### FFmpeg
-
-- **[`/v1/ffmpeg/compose`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/ffmpeg/ffmpeg_compose.md)**
-  - Provides a flexible interface to FFmpeg for complex media processing operations.
-
-### Image
-
-- **[`/v1/image/convert/video`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/image/convert/image_to_video.md)**
-  - Transforms a static image into a video with custom duration and zoom effects.
-
-- **[`/v1/image/screenshot/webpage`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/image/screenshot_webpage.md)**
-  - Captures screenshots of web pages using Playwright with advanced options like viewport size, device emulation, and custom HTML/CSS/JS injection.
-
-### Media
-
-- **[`/v1/media/convert`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/media/convert/media_convert.md)**
-  - Converts media files from one format to another with customizable codec options.
-
-- **[`/v1/media/convert/mp3`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/media/convert/media_to_mp3.md)**
-  - Converts various media formats specifically to MP3 audio.
-
-- **[`/v1/BETA/media/download`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/media/download.md)**
-  - Downloads media content from various online sources using yt-dlp.
-
-- **[`/v1/media/feedback`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/media/feedback.md)**
-  - Provides a web interface for collecting and displaying feedback on media content.
-
-- **[`/v1/media/transcribe`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/media/media_transcribe.md)**
-  - Transcribes or translates audio/video content from a provided media URL.
-
-- **[`/v1/media/silence`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/media/silence.md)**
-  - Detects silence intervals in a given media file.
-
-- **[`/v1/media/metadata`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/media/metadata.md)**
-  - Extracts comprehensive metadata from media files including format, codecs, resolution, and bitrates.
-
-### S3
-
-- **[`/v1/s3/upload`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/s3/upload.md)**
-  - Uploads files to Amazon S3 storage by streaming directly from a URL.
-
-### Toolkit
-
-- **[`/v1/toolkit/authenticate`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/toolkit/authenticate.md)**
-  - Provides a simple authentication mechanism to validate API keys.
-
-- **[`/v1/toolkit/test`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/toolkit/test.md)**
-  - Verifies that the NCA Toolkit API is properly installed and functioning.
-
-- **[`/v1/toolkit/job/status`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/toolkit/job_status.md)**
-  - Retrieves the status of a specific job by its ID.
-
-- **[`/v1/toolkit/jobs/status`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/toolkit/jobs_status.md)**
-  - Retrieves the status of all jobs within a specified time range.
-
-### Video
-
-- **[`/v1/video/caption`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/video/caption_video.md)**
-  - Adds customizable captions to videos with various styling options.
-
-- **[`/v1/video/concatenate`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/video/concatenate.md)**
-  - Combines multiple videos into a single continuous video file.
-
-- **[`/v1/video/thumbnail`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/video/thumbnail.md)**
-  - Extracts a thumbnail image from a specific timestamp in a video.
-
-- **[`/v1/video/cut`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/video/cut.md)**
-  - Cuts specified segments from a video file with optional encoding settings.
-
-- **[`/v1/video/split`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/video/split.md)**
-  - Splits a video into multiple segments based on specified start and end times.
-
-- **[`/v1/video/trim`](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/video/trim.md)**
-  - Trims a video by keeping only the content between specified start and end times.
+- **🎙️ Chatterbox TTS Integration** - State-of-the-art text-to-speech in 23 languages
+- **🔊 Voice Cloning** - Zero-shot voice cloning from single audio samples
+- **🎬 Media Processing** - Audio, video, image conversion and manipulation
+- **☁️ Cloud Storage** - S3, Google Cloud Storage, and local storage support
+- **📊 Interactive API Docs** - Swagger UI for easy testing and exploration
+- **🐳 Docker Ready** - Easy deployment with GPU support
+- **⚡ High Performance** - GPU-accelerated processing, queue management
+- **🔐 Secure** - API key authentication, rate limiting support
 
 ---
 
-## Docker Build and Run
+## 🎯 What Makes This Special?
 
-### Build the Docker Image
+### Chatterbox TTS (NEW!)
+- **23 Languages**: en, de, es, fr, it, pt, pl, tr, ru, nl, cs, ar, zh, ja, ko, hu, hi, and more
+- **Zero-Shot Voice Cloning**: Clone any voice from a 3-30 second audio sample
+- **Emotion Control**: Adjustable emotion intensity (0.0 - 2.0)
+- **High Quality**: 0.5B parameter model trained on 500k hours of data
+- **GPU Accelerated**: 5-10x faster with NVIDIA GPU support
+- **Cross-Lingual**: Clone voices and speak in different languages
 
-   ```bash
-   docker build -t no-code-architects-toolkit .
-   ```
+### Media Processing
+- Audio concatenation, conversion, and mixing
+- Video captioning, trimming, splitting, and concatenation
+- Image to video conversion
+- FFmpeg composition with full control
+- Media transcription and translation
+- Metadata extraction
 
-### General Environment Variables
-
-#### `API_KEY`
-- **Purpose**: Used for API authentication.
-- **Requirement**: Mandatory.
-
----
-
-### S3-Compatible Storage Environment Variables
-
-#### `S3_ENDPOINT_URL`
-- **Purpose**: Endpoint URL for the S3-compatible service.
-- **Requirement**: Mandatory if using S3-compatible storage.
-
-#### `S3_ACCESS_KEY`
-- **Purpose**: The access key for the S3-compatible storage service.
-- **Requirement**: Mandatory if using S3-compatible storage.
-
-#### `S3_SECRET_KEY`
-- **Purpose**: The secret key for the S3-compatible storage service.
-- **Requirement**: Mandatory if using S3-compatible storage.
-
-#### `S3_BUCKET_NAME`
-- **Purpose**: The bucket name for the S3-compatible storage service.
-- **Requirement**: Mandatory if using S3-compatible storage.
-
-#### `S3_REGION`
-- **Purpose**: The region for the S3-compatible storage service.
-- **Requirement**: Mandatory if using S3-compatible storage, "None" is acceptible for some s3 providers.
+### Cloud Integration
+- Amazon S3
+- Google Cloud Storage
+- Dropbox
+- Google Drive
+- Local storage
 
 ---
 
-### Google Cloud Storage (GCP) Environment Variables
+## 📖 Quick Start
 
-#### `GCP_SA_CREDENTIALS`
-- **Purpose**: The JSON credentials for the GCP Service Account.
-- **Requirement**: Mandatory if using GCP storage.
+### Option 1: Docker (Recommended)
 
-#### `GCP_BUCKET_NAME`
-- **Purpose**: The name of the GCP storage bucket.
-- **Requirement**: Mandatory if using GCP storage.
+```bash
+# 1. Clone repository
+git clone https://github.com/your-username/ai-toolkit.git
+cd ai-toolkit
 
----
+# 2. Configure environment
+cp .env.example .env
+# Edit .env with your API_KEY and storage settings
 
-### Performance Tuning Variables
+# 3. Build and run (CPU-only)
+docker-compose up -d
 
-#### `MAX_QUEUE_LENGTH`
-- **Purpose**: Limits the maximum number of concurrent tasks in the queue.
-- **Default**: 0 (unlimited)
-- **Recommendation**: Set to a value based on your server resources, e.g., 10-20 for smaller instances.
+# 4. Or with GPU support (5-10x faster TTS)
+docker-compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
 
-#### `GUNICORN_WORKERS`
-- **Purpose**: Number of worker processes for handling requests.
-- **Default**: Number of CPU cores + 1
-- **Recommendation**: 2-4× number of CPU cores for CPU-bound workloads.
+# 5. Access Swagger UI
+open http://localhost:8080/api/docs
+```
 
-#### `GUNICORN_TIMEOUT`
-- **Purpose**: Timeout (in seconds) for worker processes.
-- **Default**: 30
-- **Recommendation**: Increase for processing large media files (e.g., 300-600).
+### Option 2: Local Development
 
----
+```bash
+# 1. Prerequisites
+# - Python 3.11+
+# - FFmpeg installed
+# - Optional: CUDA for GPU support
 
-### Storage Configuration
+# 2. Install dependencies
+pip install -r requirements.txt
 
-#### `LOCAL_STORAGE_PATH`
-- **Purpose**: Directory for temporary file storage during processing.
-- **Default**: /tmp
-- **Recommendation**: Set to a path with sufficient disk space for your expected workloads.
+# 3. Configure environment
+cp .env.example .env
+# Edit .env
 
-### Notes
-- Ensure all required environment variables are set based on the storage provider in use (GCP or S3-compatible). 
-- Missing any required variables will result in errors during runtime.
-- Performance variables can be tuned based on your workload and available resources.
+# 4. Run
+python app.py
 
-### Run the Docker Container:
-
-   ```bash
-   docker run -d -p 8080:8080 \
-     # Authentication (required)
-     -e API_KEY=your_api_key \
-     
-     # Cloud storage provider (choose one)
-
-     # s3
-     #
-     #-e S3_ENDPOINT_URL=https://nyc3.digitaloceanspaces.com \
-     #-e S3_ACCESS_KEY=your_access_key \
-     #-e S3_SECRET_KEY=your_secret_key \
-     #-e S3_BUCKET_NAME=your_bucket_name \
-     #-e S3_REGION=nyc3 \
-
-     # Or
-
-     # GCP Storage
-     #
-     #-e GCP_SA_CREDENTIALS='{"your":"service_account_json"}' \
-     #-e GCP_BUCKET_NAME=your_gcs_bucket_name \
-     
-     # Local storage configuration (optional)
-     -e LOCAL_STORAGE_PATH=/tmp \
-     
-     # Performance tuning (optional)
-     -e MAX_QUEUE_LENGTH=10 \
-     -e GUNICORN_WORKERS=4 \
-     -e GUNICORN_TIMEOUT=300 \
-     
-     no-code-architects-toolkit
-   ```
+# 5. Access API
+open http://localhost:8080/api/docs
+```
 
 ---
 
-## Installation Guides
+## 🎙️ Chatterbox TTS Examples
 
-This API can be deployed to various cloud platforms:
+### Text-to-Speech (English)
+
+```bash
+curl -X POST http://localhost:8080/v1/chatterbox/text-to-speech \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your-api-key" \
+  -d '{
+    "text": "Hello! Welcome to the AI Toolkit.",
+    "language": "en",
+    "model_type": "english"
+  }'
+```
+
+### Text-to-Speech (German)
+
+```bash
+curl -X POST http://localhost:8080/v1/chatterbox/text-to-speech \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your-api-key" \
+  -d '{
+    "text": "Guten Tag! Willkommen beim AI Toolkit.",
+    "language": "de",
+    "model_type": "multilingual"
+  }'
+```
+
+### Voice Cloning
+
+```bash
+curl -X POST http://localhost:8080/v1/chatterbox/voice-cloning \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your-api-key" \
+  -d '{
+    "text": "This is my cloned voice speaking!",
+    "voice_audio_url": "https://example.com/reference-voice.wav",
+    "language": "en",
+    "model_type": "multilingual"
+  }'
+```
+
+---
+
+## 📚 API Endpoints
+
+### 🎙️ Chatterbox TTS (NEW!)
+
+- **POST /v1/chatterbox/text-to-speech** - Generate speech from text ([Docs](docs/chatterbox/text_to_speech.md))
+- **POST /v1/chatterbox/voice-cloning** - Clone voices and generate speech ([Docs](docs/chatterbox/voice_cloning.md))
+
+### 🎵 Audio
+
+- **POST /v1/audio/concatenate** - Combine multiple audio files
+
+### 🎬 Video
+
+- **POST /v1/video/caption** - Add captions to videos
+- **POST /v1/video/concatenate** - Combine videos
+- **POST /v1/video/cut** - Cut segments from videos
+- **POST /v1/video/split** - Split videos into segments
+- **POST /v1/video/trim** - Trim videos
+- **POST /v1/video/thumbnail** - Extract thumbnails
+
+### 🖼️ Image
+
+- **POST /v1/image/convert/video** - Convert images to videos
+- **POST /v1/image/screenshot/webpage** - Capture webpage screenshots
+
+### 📁 Media
+
+- **POST /v1/media/convert** - Convert media formats
+- **POST /v1/media/transcribe** - Transcribe/translate media
+- **POST /v1/media/metadata** - Extract metadata
+- **POST /v1/media/silence** - Detect silence
+
+### 🔧 FFmpeg
+
+- **POST /v1/ffmpeg/compose** - Complex media processing
+
+### 💾 Storage
+
+- **POST /v1/s3/upload** - Upload to S3-compatible storage
+
+### 🛠️ Toolkit
+
+- **POST /v1/toolkit/authenticate** - Validate API keys
+- **GET /v1/toolkit/test** - Test API functionality
+- **GET /v1/toolkit/job/status** - Check job status
+
+**👉 [Complete API Documentation](http://localhost:8080/api/docs)** (after starting server)
+
+---
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+Create a `.env` file:
+
+```bash
+# API Configuration
+API_KEY=your-secret-api-key
+API_HOST=localhost:8080
+
+# Storage Configuration
+STORAGE_TYPE=s3  # or 'gcs' or 'local'
+
+# S3 Storage
+S3_BUCKET=your-bucket-name
+S3_ACCESS_KEY=your-access-key
+S3_SECRET_KEY=your-secret-key
+S3_REGION=us-east-1
+
+# Google Cloud Storage
+GCS_BUCKET=your-bucket-name
+GCS_CREDENTIALS_JSON=path/to/credentials.json
+
+# Local Storage
+LOCAL_STORAGE_PATH=/app/storage
+
+# Performance
+GUNICORN_WORKERS=2
+GUNICORN_TIMEOUT=300
+MAX_QUEUE_LENGTH=100
+
+# GPU Configuration (optional)
+CUDA_VISIBLE_DEVICES=0  # GPU index
+```
+
+---
+
+## 🐳 Docker Deployment
+
+### CPU-Only
+
+```bash
+docker-compose up -d
+```
+
+### With GPU Support
+
+```bash
+# Prerequisites: nvidia-docker2
+docker-compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
+```
+
+### Verify GPU Access
+
+```bash
+docker-compose exec ncat nvidia-smi
+```
+
+**[📖 Complete Docker Guide](docs/docker-deployment.md)**
+
+---
+
+## 🌐 Cloud Deployment
 
 ### Digital Ocean
+- [Digital Ocean Deployment Guide](docs/cloud-installation/do.md)
 
-The Digital Ocean App platform is pretty easy to set up and get going, but it can cost more then other cloud providers.
+### Google Cloud Run
+- [GCP Deployment Guide](docs/cloud-installation/gcp.md)
 
-#### Important: Long running processes
-
-You need to use the "webhook_url" (for any request that exceeds 1 min) in your API payload to avoid timeouts due to CloudFlair proxy timeout.
-
-If you use the webhook_url, there is no limit to the processing length.
-
-- [Digital Ocean App Platform Installation Guide](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/cloud-installation/do.md) - Deploy the API on Digital Ocean App Platform
-
-### Google Cloud RUN Platform
-
-Sometimes difficult for people to install (especially on Google Business Workspaces), lots of detailed security exceptions.
-
-However this is one of the cheapest options with great performance because you're only charged when the NCA Toolkit is processesing a request.
-
-Outside of that you are not charged.
-
-#### Imporatnt: Requests exceeding 5+ minutes can be problemactic 
-
-GCP Run will terminate long rununing processes, which can happen when processing larger files (whether you use the webhook_url or not).
-
-However, when your processing times are consistant lower than 5 minutes (e.g. you're only process smaller files), it works great! The performance is also great and as soon as you stop making requests you stop paying.
-
-They also have a GPU option that might be usable for better performance (untested).
-
-- [Google Cloud RUN Platform (GCP) Installation Guide](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docs/cloud-installation/gcp.md) - Deploy the API on Google Cloud Run
-
-### General Docker Instructions
-
-You can use these instructions to deploy the NCA Toolkit to any linux server (on any platform)
-
-You can more easily control performance and cost this way, but requires more technical skill to get up and running (not much though).
-
-- [General Docker Compose Installation Guide](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docker-compose.md)
-
-### Local Development with MinIO and n8n
-
-For local development with integrated S3-compatible storage and workflow automation:
-
-- [Local Development with MinIO and n8n Guide](https://github.com/stephengpope/no-code-architects-toolkit/blob/main/docker-compose.local.minio.n8n.md) - Complete local development environment with MinIO storage and n8n workflow automation
-
-## Testing the API
-
-1. Install the **[Postman Template](https://bit.ly/49Gkh61)** on your computer
-2. Import the API example requests from the template
-3. Configure your environment variables in Postman:
-   - `base_url`: Your deployed API URL
-   - `x-api-key`: Your API key configured during installation
-4. Use the example requests to validate that the API is functioning correctly
-5. Use the **[NCA Toolkit API GPT](https://bit.ly/4feDDk4)** to explore additional features
+### AWS, Azure, etc.
+- Use standard Docker deployment
+- See [Docker Guide](docs/docker-deployment.md)
 
 ---
 
-## Contributing To the NCA Toolkit API
+## 📊 Swagger UI
 
-We welcome contributions from the public! If you'd like to contribute to this project, please follow these steps:
+Access interactive API documentation:
+
+```
+http://localhost:8080/api/docs
+```
+
+Features:
+- Try out endpoints directly in browser
+- API key authentication
+- Request/response examples
+- Schema validation
+- Export OpenAPI spec
+
+**[📖 Swagger Documentation](docs/swagger.md)**
+
+---
+
+## 🔧 System Requirements
+
+### Minimum (CPU-only)
+- **CPU**: 4+ cores
+- **RAM**: 8GB
+- **Storage**: 10GB free
+- **Python**: 3.11+
+
+### Recommended (GPU)
+- **CPU**: 8+ cores
+- **RAM**: 16GB
+- **GPU**: 6GB+ VRAM (NVIDIA CUDA)
+- **Storage**: 20GB+ free
+- **Python**: 3.11+
+
+---
+
+## 📈 Performance
+
+### Text-to-Speech (Chatterbox)
+
+| Configuration | First Request | Subsequent |
+|--------------|---------------|------------|
+| CPU-only | 10-30s (model load) | 3-8s |
+| GPU (4GB+ VRAM) | 15-30s (model load) | 1-3s |
+
+### Media Processing
+
+Depends on file size and operation. Use webhooks for async processing.
+
+---
+
+## 🛠️ Development
+
+### Adding New Endpoints
+
+1. Create route file: `routes/v1/category/action.py`
+2. Create service: `services/v1/category/action.py`
+3. Add Swagger documentation
+4. Restart server
+
+**[📖 Adding Routes Guide](docs/adding_routes.md)**
+
+### Testing
+
+```bash
+# Run tests
+pytest
+
+# Check API health
+curl http://localhost:8080/v1/toolkit/test
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
 
 1. Fork the repository
-2. Create a new branch for your feature or bug fix
+2. Create a feature branch
 3. Make your changes
-4. Submit a pull request to the "build" branch
-
-### Pull Request Process
-
-1. Ensure any install or build dependencies are removed before the end of the layer when doing a build.
-2. Update the README.md with details of changes to the interface, this includes new environment variables, exposed ports, useful file locations and container parameters.
-
-### Adding New Routes
-
-If you want to add new API endpoints, check out our [Adding Routes Guide](docs/adding_routes.md) to learn how to use the dynamic route registration system.
-
-Thank you for your contributions!
+4. Add tests and documentation
+5. Submit a pull request
 
 ---
 
-## How To Get Support
-
-Get courses, community, support daily calls and more.
-
-Join the **[No-Code Architects Community](https://www.skool.com/no-code-architects)** today!
-
-## License
+## 📄 License
 
 This project is licensed under the [GNU General Public License v2.0 (GPL-2.0)](LICENSE).
+
+Based on [no-code-architects-toolkit](https://github.com/stephengpope/no-code-architects-toolkit) by Stephen G. Pope.
+
+---
+
+## 🔗 Links
+
+- **Documentation**: [docs/](docs/)
+- **Chatterbox TTS**: [docs/chatterbox/](docs/chatterbox/)
+- **Docker Guide**: [docs/docker-deployment.md](docs/docker-deployment.md)
+- **Swagger Docs**: [docs/swagger.md](docs/swagger.md)
+- **Original Project**: [no-code-architects-toolkit](https://github.com/stephengpope/no-code-architects-toolkit)
+
+---
+
+## 🌟 Features Overview
+
+```
+✅ Text-to-Speech (23 languages)
+✅ Voice Cloning (zero-shot)
+✅ Audio/Video Processing
+✅ Image Processing
+✅ FFmpeg Integration
+✅ Cloud Storage (S3, GCS)
+✅ Swagger UI
+✅ Docker Ready
+✅ GPU Acceleration
+✅ Webhook Support
+✅ Queue Management
+✅ API Authentication
+✅ Comprehensive Documentation
+```
+
+---
+
+**Made with ❤️ by NetzPrinz aka Oliver Hees**
+
+**Based on the excellent work by Stephen G. Pope**

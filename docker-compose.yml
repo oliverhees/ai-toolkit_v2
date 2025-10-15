@@ -21,9 +21,19 @@ services:
       - traefik_data:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
   ncat:
-    image: stephengpope/no-code-architects-toolkit:latest
+    # Updated image name for NetzPrinz AI Toolkit
+    # Build locally: docker build -t netzprinz/ai-toolkit:latest .
+    image: netzprinz/ai-toolkit:latest
+    # Or use original: stephengpope/no-code-architects-toolkit:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     env_file:
       - .env
+    environment:
+      # For GPU support, combine with docker-compose.gpu.yml
+      # CPU-only by default (Chatterbox will use CPU)
+      - CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-}
     labels:
       - traefik.enable=true
       - traefik.http.routers.ncat.rule=Host(`${APP_DOMAIN}`)
@@ -33,6 +43,10 @@ services:
     volumes:
       - storage:/var/www/html/storage/app
       - logs:/var/www/html/storage/logs
+      # Optional: Mount local code for development
+      # - ./app.py:/app/app.py
+      # - ./routes:/app/routes
+      # - ./services:/app/services
     restart: unless-stopped
 
 volumes:
