@@ -115,10 +115,7 @@ def create_app():
         ]
     }
 
-    # Initialize Swagger
-    Swagger(app, config=swagger_config, template=swagger_template)
-
-    # Create a queue to hold tasks
+    # Create a queue to hold tasks (moved before Swagger init)
     task_queue = Queue()
     queue_id = id(task_queue)  # Generate a single queue_id for this worker
 
@@ -407,6 +404,9 @@ def create_app():
     
     # Use the discover_and_register_blueprints function to register all blueprints
     discover_and_register_blueprints(app)
+
+    # Initialize Swagger AFTER blueprints are registered so it can discover all routes
+    Swagger(app, config=swagger_config, template=swagger_template)
 
     return app
 
