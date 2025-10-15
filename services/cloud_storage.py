@@ -58,36 +58,48 @@ class S3CompatibleProvider(CloudStorageProvider):
         self.secret_key = os.getenv('S3_SECRET_KEY')
         self.bucket_name = os.environ.get('S3_BUCKET_NAME', '')
         self.region = os.environ.get('S3_REGION', '')
-        
+
         # Check if endpoint is Digital Ocean and bucket name or region is missing
-        if (self.endpoint_url and 
-            'digitalocean' in self.endpoint_url.lower() and 
+        if (self.endpoint_url and
+            'digitalocean' in self.endpoint_url.lower() and
             (not self.bucket_name or not self.region)):
-            
+
             logger.info("Digital Ocean endpoint detected with missing bucket or region. Extracting from URL.")
             try:
                 # Extract bucket name and region from URL like https://sgp-labs.nyc3.digitaloceanspaces.com
                 parsed_url = urlparse(self.endpoint_url)
                 hostname_parts = parsed_url.hostname.split('.')
-                
+
                 # The first part is the bucket name (sgp-labs)
                 if not self.bucket_name:
                     self.bucket_name = hostname_parts[0]
                     logger.info(f"Extracted bucket name from URL: {self.bucket_name}")
-                
+
                 # The second part is the region (nyc3)
                 if not self.region:
                     self.region = hostname_parts[1]
                     logger.info(f"Extracted region from URL: {self.region}")
-                
+
             except Exception as e:
                 logger.warning(f"Failed to parse Digital Ocean URL: {e}. Using provided values.")
 
     def upload_file(self, file_path: str) -> str:
         return upload_to_s3(file_path, self.endpoint_url, self.access_key, self.secret_key, self.bucket_name, self.region)
 
+class LocalStorageProvider(CloudStorageProvider):
+    """Local storage provider for testing - returns file path instead of cloud URL"""
+    def __init__(self):
+        from config import LOCAL_STORAGE_PATH
+        self.storage_path = LOCAL_STORAGE_PATH
+        logger.warning("Using LOCAL storage provider - files will not be publicly accessible")
+
+    def upload_file(self, file_path: str) -> str:
+        # Just return the local file path
+        logger.info(f"Local storage: keeping file at {file_path}")
+        return f"file://{file_path}"
+
 def get_storage_provider() -> CloudStorageProvider:
-    
+
     if os.getenv('S3_ENDPOINT_URL'):
 
         if ('digitalocean' in os.getenv('S3_ENDPOINT_URL').lower()):
@@ -97,13 +109,15 @@ def get_storage_provider() -> CloudStorageProvider:
             validate_env_vars('S3')
 
         return S3CompatibleProvider()
-    
+
     if os.getenv('GCP_BUCKET_NAME'):
 
         validate_env_vars('GCP')
         return GCPStorageProvider()
-    
-    raise ValueError(f"No cloud storage settings provided.")
+
+    # Fallback to local storage if no cloud provider is configured
+    logger.warning("No cloud storage provider configured, using local storage")
+    return LocalStorageProvider()
 
 def upload_file(file_path: str) -> str:
     provider = get_storage_provider()
