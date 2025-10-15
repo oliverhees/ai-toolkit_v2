@@ -183,7 +183,9 @@ COPY requirements.txt .
 # Install Python dependencies, upgrade pip
 # Note: PyTorch CPU version will be installed by default
 # For GPU support, modify requirements.txt to use torch with CUDA
+# Install numpy first as it's needed for pkuseg build
 RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir numpy && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install openai-whisper && \
     pip install playwright && \
