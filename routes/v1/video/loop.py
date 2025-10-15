@@ -46,6 +46,77 @@ logger = logging.getLogger(__name__)
 })
 @queue_task_wrapper(bypass_queue=False)
 def loop_video(job_id, data):
+    """
+    Loop a video file multiple times
+    ---
+    tags:
+      - Video
+    summary: Loop Video File
+    description: |
+      Repeat a video file a specified number of times efficiently.
+
+      **Features:**
+      - Download video once, loop 1-100 times
+      - No re-encoding (uses FFmpeg concat demuxer)
+      - Output format: MP4
+      - Supports webhook for async processing
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          required:
+            - video_url
+            - loop_count
+          properties:
+            video_url:
+              type: string
+              format: uri
+              example: "https://example.com/video.mp4"
+              description: URL of the video file to loop
+            loop_count:
+              type: integer
+              minimum: 1
+              maximum: 100
+              example: 3
+              description: Number of times to repeat the video (1-100)
+            webhook_url:
+              type: string
+              format: uri
+              example: "https://your-app.com/webhook"
+              description: Optional webhook URL for async processing
+            id:
+              type: string
+              example: "video-loop-456"
+              description: Custom identifier for tracking
+    responses:
+      200:
+        description: Success - Video looped
+        schema:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 200
+            response:
+              type: string
+              example: "file:///app/storage/output.mp4"
+              description: URL of the looped video file
+            message:
+              type: string
+              example: "success"
+      202:
+        description: Accepted for async processing
+      400:
+        description: Bad Request - Invalid parameters
+      401:
+        description: Unauthorized - Invalid API key
+      500:
+        description: Internal Server Error
+    security:
+      - ApiKeyAuth: []
+    """
     video_url = data['video_url']
     loop_count = data['loop_count']
     webhook_url = data.get('webhook_url')
