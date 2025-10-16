@@ -319,6 +319,13 @@ def create_app():
 
     app.queue_task = queue_task
 
+    # Serve OpenAPI spec
+    @app.route('/static/openapi.yaml')
+    def serve_openapi_spec():
+        import os
+        from flask import send_from_directory
+        return send_from_directory(os.path.join(os.getcwd(), 'static'), 'openapi.yaml')
+
     # Register special route for Next.js root asset paths first
     from routes.v1.media.feedback import create_root_next_routes
     create_root_next_routes(app)
