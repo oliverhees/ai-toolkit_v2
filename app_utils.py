@@ -62,6 +62,7 @@ def log_job_status(job_id, data):
 
 def queue_task_wrapper(bypass_queue=False):
     def decorator(f):
+        @wraps(f)
         def wrapper(*args, **kwargs):
             return current_app.queue_task(bypass_queue=bypass_queue)(f)(*args, **kwargs)
         return wrapper
