@@ -27,93 +27,14 @@ import json
 from version import BUILD_NUMBER  # Import the BUILD_NUMBER
 from app_utils import log_job_status, discover_and_register_blueprints  # Import the discover_and_register_blueprints function
 from services.gcp_toolkit import trigger_cloud_run_job
-from flasgger import Swagger
+from flask_swagger_ui import get_swaggerui_blueprint
 
 MAX_QUEUE_LENGTH = int(os.environ.get('MAX_QUEUE_LENGTH', 0))
 
 def create_app():
     app = Flask(__name__)
 
-    # Swagger/OpenAPI Configuration
-    swagger_config = {
-        "headers": [],
-        "specs": [
-            {
-                "endpoint": "apispec",
-                "route": "/apispec.json",
-            }
-        ],
-        "static_url_path": "/flasgger_static",
-        "swagger_ui": True,
-        "specs_route": "/api/docs"
-    }
-
-    swagger_template = {
-        "swagger": "2.0",
-        "info": {
-            "title": "AI Toolkit API",
-            "description": "Advanced AI Toolkit with Media Processing, TTS, and Voice Cloning capabilities\n\n"
-                          "**Author:** NetzPrinz aka Oliver Hees\n\n"
-                          "**Based on:** no-code-architects-toolkit by Stephen G. Pope\n\n"
-                          "## Features\n"
-                          "- Audio/Video Processing\n"
-                          "- Text-to-Speech (23 languages)\n"
-                          "- Voice Cloning\n"
-                          "- Image Processing\n"
-                          "- Cloud Storage Integration\n"
-                          "- Asynchronous Processing with Webhooks",
-            "version": BUILD_NUMBER,
-            "contact": {
-                "name": "NetzPrinz aka Oliver Hees",
-            },
-        },
-        "host": os.environ.get("API_HOST", "localhost:8080"),
-        "basePath": "/",
-        "schemes": ["http", "https"],
-        "securityDefinitions": {
-            "ApiKeyAuth": {
-                "type": "apiKey",
-                "in": "header",
-                "name": "x-api-key",
-                "description": "API Key for authentication. Contact the API administrator to obtain one."
-            }
-        },
-        "security": [
-            {"ApiKeyAuth": []}
-        ],
-        "tags": [
-            {
-                "name": "Chatterbox TTS",
-                "description": "Text-to-Speech and Voice Cloning endpoints powered by Chatterbox AI"
-            },
-            {
-                "name": "Audio",
-                "description": "Audio processing and manipulation endpoints"
-            },
-            {
-                "name": "Video",
-                "description": "Video processing and manipulation endpoints"
-            },
-            {
-                "name": "Image",
-                "description": "Image processing and conversion endpoints"
-            },
-            {
-                "name": "Media",
-                "description": "General media processing endpoints"
-            },
-            {
-                "name": "Storage",
-                "description": "Cloud storage integration endpoints"
-            },
-            {
-                "name": "Code",
-                "description": "Code execution endpoints"
-            }
-        ]
-    }
-
-    # Create a queue to hold tasks (moved before Swagger init)
+    # Create a queue to hold tasks
     task_queue = Queue()
     queue_id = id(task_queue)  # Generate a single queue_id for this worker
 
@@ -398,21 +319,6 @@ def create_app():
 
     app.queue_task = queue_task
 
-    # Test route for Swagger - directly on app, not in blueprint
-    @app.route('/v1/test/swagger-direct', methods=['GET'])
-    def swagger_direct_test():
-        """
-        Direct Swagger test
-        ---
-        tags:
-          - Test
-        summary: Direct test endpoint
-        responses:
-          200:
-            description: Works
-        """
-        return {"test": "direct works"}, 200
-
     # Register special route for Next.js root asset paths first
     from routes.v1.media.feedback import create_root_next_routes
     create_root_next_routes(app)
@@ -420,9 +326,20 @@ def create_app():
     # Use the discover_and_register_blueprints function to register all blueprints
     discover_and_register_blueprints(app)
 
-    # Initialize Swagger AFTER blueprints are registered so it can discover all routes
-    # parse=True tells Flasgger to extract Swagger specs from docstrings
-    Swagger(app, config=swagger_config, template=swagger_template, parse=True)
+    # Configure Swagger UI with static OpenAPI spec
+    SWAGGER_URL = '/api/docs'
+    API_URL = '/static/openapi.yaml'
+
+    swaggerui_blueprint = get_swaggerui_blueprint(
+        SWAGGER_URL,
+        API_URL,
+        config={
+            'app_name': "AI Toolkit API",
+            'defaultModelsExpandDepth': -1  # Hide models section by default
+        }
+    )
+
+    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
     return app
 

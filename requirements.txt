@@ -22,4 +22,4 @@ Pillow
 matplotlib
 yt-dlp
 chatterbox-tts
-flasgger
+flask-swagger-ui

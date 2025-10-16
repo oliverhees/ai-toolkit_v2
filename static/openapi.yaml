@@ -1,0 +1,419 @@
+openapi: 3.0.0
+info:
+  title: AI Toolkit API
+  version: "206"
+  description: |
+    Advanced AI Toolkit with Media Processing, TTS, and Voice Cloning capabilities
+
+    **Author:** NetzPrinz aka Oliver Hees
+
+    **Based on:** no-code-architects-toolkit by Stephen G. Pope
+
+    ## Features
+    - Audio/Video Processing & Looping
+    - Text-to-Speech (23 languages)
+    - Voice Cloning
+    - Image Processing
+    - Cloud Storage Integration
+    - Asynchronous Processing with Webhooks
+  contact:
+    name: NetzPrinz aka Oliver Hees
+
+servers:
+  - url: http://srv964214.hstgr.cloud
+    description: Production server
+  - url: http://localhost:8080
+    description: Local development
+
+security:
+  - ApiKeyAuth: []
+
+tags:
+  - name: Chatterbox TTS
+    description: Text-to-Speech and Voice Cloning powered by Chatterbox AI
+  - name: Audio
+    description: Audio processing and manipulation
+  - name: Video
+    description: Video processing and manipulation
+  - name: Toolkit
+    description: System and testing endpoints
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API Key for authentication
+
+  schemas:
+    SuccessResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        id:
+          type: string
+          example: "custom-id-123"
+        job_id:
+          type: string
+          format: uuid
+        response:
+          type: string
+          example: "file:///app/storage/output.mp3"
+        message:
+          type: string
+          example: "success"
+        run_time:
+          type: number
+          example: 1.234
+        queue_time:
+          type: number
+          example: 0
+        total_time:
+          type: number
+          example: 1.234
+        pid:
+          type: integer
+          example: 8
+        queue_id:
+          type: integer
+        queue_length:
+          type: integer
+          example: 0
+        build_number:
+          type: string
+          example: "206"
+
+    AsyncResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 202
+        id:
+          type: string
+        job_id:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: "processing"
+        pid:
+          type: integer
+        queue_id:
+          type: integer
+        max_queue_length:
+          type: string
+        queue_length:
+          type: integer
+        build_number:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 500
+        message:
+          type: string
+          example: "Error message"
+        job_id:
+          type: string
+
+paths:
+  /v1/toolkit/test:
+    get:
+      tags:
+        - Toolkit
+      summary: Test API endpoint
+      description: Simple test to verify API is working
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v1/audio/loop:
+    post:
+      tags:
+        - Audio
+      summary: Loop audio file
+      description: |
+        Repeat an audio file a specified number of times efficiently.
+
+        **Features:**
+        - Download audio once, loop 1-100 times
+        - No re-encoding (uses FFmpeg concat demuxer)
+        - Output format: MP3
+        - Supports webhook for async processing
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - audio_url
+                - loop_count
+              properties:
+                audio_url:
+                  type: string
+                  format: uri
+                  example: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+                  description: URL of the audio file to loop
+                loop_count:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                  example: 5
+                  description: Number of times to repeat the audio
+                webhook_url:
+                  type: string
+                  format: uri
+                  example: "https://your-app.com/webhook"
+                  description: Optional webhook URL for async processing
+                id:
+                  type: string
+                  example: "audio-loop-123"
+                  description: Custom identifier for tracking
+      responses:
+        '200':
+          description: Success - Audio looped
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '202':
+          description: Accepted for async processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+
+  /v1/video/loop:
+    post:
+      tags:
+        - Video
+      summary: Loop video file
+      description: |
+        Repeat a video file a specified number of times efficiently.
+
+        **Features:**
+        - Download video once, loop 1-100 times
+        - No re-encoding (uses FFmpeg concat demuxer)
+        - Output format: MP4
+        - Supports webhook for async processing
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - video_url
+                - loop_count
+              properties:
+                video_url:
+                  type: string
+                  format: uri
+                  example: "https://example.com/video.mp4"
+                  description: URL of the video file to loop
+                loop_count:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                  example: 3
+                  description: Number of times to repeat the video
+                webhook_url:
+                  type: string
+                  format: uri
+                  description: Optional webhook URL for async processing
+                id:
+                  type: string
+                  example: "video-loop-456"
+                  description: Custom identifier for tracking
+      responses:
+        '200':
+          description: Success - Video looped
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '202':
+          description: Accepted for async processing
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+
+  /v1/chatterbox/text-to-speech:
+    post:
+      tags:
+        - Chatterbox TTS
+      summary: Text-to-Speech Generation
+      description: |
+        Convert text to natural-sounding speech using Chatterbox TTS model.
+
+        **Features:**
+        - Supports 23 languages (with multilingual model)
+        - Adjustable emotion intensity
+        - High-quality 24kHz audio output
+        - GPU-accelerated processing
+
+        **Model Types:**
+        - `english`: English-only, faster
+        - `multilingual`: 23 languages
+
+        **Languages:** en, de, es, fr, it, pt, pl, tr, ru, nl, cs, ar, zh, ja, ko, hu, hi, and more
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+              properties:
+                text:
+                  type: string
+                  minLength: 1
+                  maxLength: 5000
+                  example: "Hello! Welcome to our AI-powered text-to-speech service."
+                  description: Text to convert to speech (1-5000 characters)
+                language:
+                  type: string
+                  default: "en"
+                  example: "en"
+                  description: Language code (e.g., en, de, es, fr, it)
+                model_type:
+                  type: string
+                  enum: [english, multilingual]
+                  default: "english"
+                  description: Model type
+                emotion_intensity:
+                  type: number
+                  format: float
+                  minimum: 0.0
+                  maximum: 2.0
+                  default: 1.0
+                  example: 1.0
+                  description: Emotion exaggeration level (0.0 = neutral, 2.0 = maximum)
+                webhook_url:
+                  type: string
+                  format: uri
+                  description: Optional webhook URL for async processing
+                id:
+                  type: string
+                  example: "tts-request-123"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '202':
+          description: Accepted for async processing
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+
+  /v1/chatterbox/voice-cloning:
+    post:
+      tags:
+        - Chatterbox TTS
+      summary: Voice Cloning
+      description: |
+        Clone a voice from an audio sample and generate speech.
+
+        **Features:**
+        - Zero-shot voice cloning from 3-30 second audio sample
+        - Works with any language
+        - Cross-lingual support (clone voice, speak different language)
+        - High-quality output
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+                - voice_audio_url
+              properties:
+                text:
+                  type: string
+                  minLength: 1
+                  maxLength: 5000
+                  example: "This is my cloned voice speaking!"
+                  description: Text to speak with cloned voice
+                voice_audio_url:
+                  type: string
+                  format: uri
+                  example: "https://example.com/reference-voice.wav"
+                  description: URL of reference audio (3-30 seconds)
+                language:
+                  type: string
+                  default: "en"
+                  description: Language code for output speech
+                model_type:
+                  type: string
+                  enum: [english, multilingual]
+                  default: "multilingual"
+                emotion_intensity:
+                  type: number
+                  minimum: 0.0
+                  maximum: 2.0
+                  default: 1.0
+                webhook_url:
+                  type: string
+                  format: uri
+                id:
+                  type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '202':
+          description: Accepted for async processing
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
