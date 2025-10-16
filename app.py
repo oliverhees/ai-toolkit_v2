@@ -177,6 +177,8 @@ def create_app():
     # Decorator to add tasks to the queue or bypass it
     def queue_task(bypass_queue=False):
         def decorator(f):
+            from functools import wraps
+            @wraps(f)
             def wrapper(*args, **kwargs):
                 job_id = str(uuid.uuid4())
                 data = request.json if request.is_json else {}
