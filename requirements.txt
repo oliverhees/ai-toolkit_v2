@@ -1,4 +1,5 @@
 Flask
+Flask-CORS
 Werkzeug
 requests
 ffmpeg-python

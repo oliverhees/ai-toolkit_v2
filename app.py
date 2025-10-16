@@ -17,6 +17,7 @@
 
 
 from flask import Flask, request
+from flask_cors import CORS
 from queue import Queue
 from services.webhook import send_webhook
 import threading
@@ -33,6 +34,15 @@ MAX_QUEUE_LENGTH = int(os.environ.get('MAX_QUEUE_LENGTH', 0))
 
 def create_app():
     app = Flask(__name__)
+
+    # Enable CORS for all routes
+    CORS(app, resources={
+        r"/*": {
+            "origins": "*",  # Allow all origins (restrict in production if needed)
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type", "X-API-Key", "Authorization"]
+        }
+    })
 
     # Create a queue to hold tasks
     task_queue = Queue()
