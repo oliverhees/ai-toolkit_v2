@@ -398,6 +398,21 @@ def create_app():
 
     app.queue_task = queue_task
 
+    # Test route for Swagger - directly on app, not in blueprint
+    @app.route('/v1/test/swagger-direct', methods=['GET'])
+    def swagger_direct_test():
+        """
+        Direct Swagger test
+        ---
+        tags:
+          - Test
+        summary: Direct test endpoint
+        responses:
+          200:
+            description: Works
+        """
+        return {"test": "direct works"}, 200
+
     # Register special route for Next.js root asset paths first
     from routes.v1.media.feedback import create_root_next_routes
     create_root_next_routes(app)
