@@ -31,7 +31,7 @@ def get_chatterbox_model(model_type="english", device=None):
     Load and cache Chatterbox TTS model.
 
     Args:
-        model_type: "english" or "multilingual"
+        model_type: "english" or "multilingual" (ignored - same model for all)
         device: Device to load model on ("cuda" or "cpu")
 
     Returns:
@@ -42,18 +42,14 @@ def get_chatterbox_model(model_type="english", device=None):
     if device is None:
         device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    cache_key = f"{model_type}_{device}"
+    # Use same model for all languages
+    cache_key = f"chatterbox_{device}"
 
     if cache_key not in _model_cache:
         try:
-            if model_type == "multilingual":
-                from chatterbox.tts import ChatterboxMultilingualTTS
-                _model_cache[cache_key] = ChatterboxMultilingualTTS.from_pretrained(device=device)
-            else:
-                from chatterbox.tts import ChatterboxTTS
-                _model_cache[cache_key] = ChatterboxTTS.from_pretrained(device=device)
-
-            print(f"Chatterbox {model_type} model loaded on {device}")
+            from chatterbox.tts import ChatterboxTTS
+            _model_cache[cache_key] = ChatterboxTTS.from_pretrained(device=device)
+            print(f"Chatterbox TTS model loaded on {device}")
         except Exception as e:
             raise Exception(f"Failed to load Chatterbox model: {str(e)}")
 
@@ -82,13 +78,11 @@ def process_text_to_speech(text, job_id, language="en", emotion_intensity=1.0, m
         model = get_chatterbox_model(model_type=model_type)
 
         # Generate speech
-        print(f"Generating speech for text: {text[:50]}...")
+        print(f"Generating speech for text: {text[:50]}... (language: {language})")
 
-        # Generate audio waveform
-        if model_type == "multilingual" and language != "en":
-            wav = model.generate(text, language=language)
-        else:
-            wav = model.generate(text)
+        # Generate audio waveform with language parameter
+        # Chatterbox TTS supports multiple languages with the same model
+        wav = model.generate(text, language=language)
 
         # Save audio file
         if isinstance(wav, torch.Tensor):
