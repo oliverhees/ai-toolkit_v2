@@ -87,16 +87,22 @@ class S3CompatibleProvider(CloudStorageProvider):
         return upload_to_s3(file_path, self.endpoint_url, self.access_key, self.secret_key, self.bucket_name, self.region)
 
 class LocalStorageProvider(CloudStorageProvider):
-    """Local storage provider for testing - returns file path instead of cloud URL"""
+    """Local storage provider for testing - returns download URL"""
     def __init__(self):
         from config import LOCAL_STORAGE_PATH
+        import os
         self.storage_path = LOCAL_STORAGE_PATH
-        logger.warning("Using LOCAL storage provider - files will not be publicly accessible")
+        # Get API host from environment or use default
+        self.api_host = os.environ.get('API_HOST', 'srv964214.hstgr.cloud')
+        logger.warning("Using LOCAL storage provider - files served via download endpoint")
 
     def upload_file(self, file_path: str) -> str:
-        # Just return the local file path
-        logger.info(f"Local storage: keeping file at {file_path}")
-        return f"file://{file_path}"
+        # Return download URL instead of file:// path
+        import os
+        filename = os.path.basename(file_path)
+        download_url = f"http://{self.api_host}/v1/media/download/{filename}"
+        logger.info(f"Local storage: file available at {download_url}")
+        return download_url
 
 def get_storage_provider() -> CloudStorageProvider:
 
