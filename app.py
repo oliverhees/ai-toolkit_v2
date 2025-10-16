@@ -408,7 +408,8 @@ def create_app():
     discover_and_register_blueprints(app)
 
     # Initialize Swagger AFTER blueprints are registered so it can discover all routes
-    Swagger(app, config=swagger_config, template=swagger_template)
+    # parse=True tells Flasgger to extract Swagger specs from docstrings
+    Swagger(app, config=swagger_config, template=swagger_template, parse=True)
 
     return app
 
