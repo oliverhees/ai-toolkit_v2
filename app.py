@@ -322,9 +322,11 @@ def create_app():
     # Serve OpenAPI spec
     @app.route('/static/openapi.yaml')
     def serve_openapi_spec():
+        from flask import send_file
         import os
-        from flask import send_from_directory
-        return send_from_directory(os.path.join(os.getcwd(), 'static'), 'openapi.yaml')
+        # Use absolute path from app root
+        spec_path = os.path.join(os.path.dirname(__file__), 'static', 'openapi.yaml')
+        return send_file(spec_path, mimetype='application/x-yaml')
 
     # Register special route for Next.js root asset paths first
     from routes.v1.media.feedback import create_root_next_routes
