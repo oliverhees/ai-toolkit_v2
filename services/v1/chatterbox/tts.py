@@ -78,11 +78,15 @@ def process_text_to_speech(text, job_id, language="en", emotion_intensity=1.0, m
         model = get_chatterbox_model(model_type=model_type)
 
         # Generate speech
-        print(f"Generating speech for text: {text[:50]}... (language: {language})")
+        print(f"Generating speech for text: {text[:50]}... (language: {language}, model: {model_type})")
 
-        # Generate audio waveform with language parameter
-        # Chatterbox TTS supports multiple languages with the same model
-        wav = model.generate(text, language=language)
+        # Generate audio waveform
+        # Only multilingual model supports language parameter
+        if model_type == "multilingual":
+            wav = model.generate(text, language=language)
+        else:
+            # English model doesn't accept language parameter
+            wav = model.generate(text)
 
         # Save audio file
         if isinstance(wav, torch.Tensor):
