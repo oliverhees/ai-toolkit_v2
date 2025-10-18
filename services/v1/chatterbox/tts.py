@@ -31,7 +31,7 @@ def get_chatterbox_model(model_type="english", device=None):
     Load and cache Chatterbox TTS model.
 
     Args:
-        model_type: "english" or "multilingual" (ignored - same model for all)
+        model_type: "english" or "multilingual"
         device: Device to load model on ("cuda" or "cpu")
 
     Returns:
@@ -42,14 +42,19 @@ def get_chatterbox_model(model_type="english", device=None):
     if device is None:
         device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    # Use same model for all languages
-    cache_key = f"chatterbox_{device}"
+    # Separate cache keys for different model types
+    cache_key = f"chatterbox_{model_type}_{device}"
 
     if cache_key not in _model_cache:
         try:
-            from chatterbox.tts import ChatterboxTTS
-            _model_cache[cache_key] = ChatterboxTTS.from_pretrained(device=device)
-            print(f"Chatterbox TTS model loaded on {device}")
+            if model_type == "multilingual":
+                from chatterbox.mtl_tts import ChatterboxMultilingualTTS
+                _model_cache[cache_key] = ChatterboxMultilingualTTS.from_pretrained(device=device)
+                print(f"Chatterbox Multilingual TTS model loaded on {device}")
+            else:
+                from chatterbox.tts import ChatterboxTTS
+                _model_cache[cache_key] = ChatterboxTTS.from_pretrained(device=device)
+                print(f"Chatterbox TTS model loaded on {device}")
         except Exception as e:
             raise Exception(f"Failed to load Chatterbox model: {str(e)}")
 
