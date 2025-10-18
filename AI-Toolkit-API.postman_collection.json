@@ -344,7 +344,7 @@
 						"header": [{"key": "Content-Type", "value": "application/json"}],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"text\": \"Hello! This is a test of text-to-speech.\",\n  \"model_type\": \"english\",\n  \"emotion_intensity\": 1.0\n}"
+							"raw": "{\n  \"text\": \"Hello! This is a test of text-to-speech.\",\n  \"model_type\": \"english\",\n  \"emotion_intensity\": 0.5\n}"
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/v1/chatterbox/text-to-speech",

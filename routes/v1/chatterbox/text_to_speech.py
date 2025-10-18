@@ -39,10 +39,10 @@ logger = logging.getLogger(__name__)
             },
             "emotion_intensity": {
                 "type": "number",
-                "minimum": 0.0,
+                "minimum": 0.25,
                 "maximum": 2.0,
-                "default": 1.0,
-                "description": "Emotion exaggeration level"
+                "default": 0.5,
+                "description": "Emotion exaggeration level (0.5=neutral, higher=more dramatic)"
             },
             "webhook_url": {
                 "type": "string",
@@ -251,7 +251,7 @@ def generate_speech(job_id, data):
     text = data["text"]
     language = data.get("language", "en")
     model_type = data.get("model_type", "english")
-    emotion_intensity = data.get("emotion_intensity", 1.0)
+    emotion_intensity = data.get("emotion_intensity", 0.5)
 
     logger.info(
         f"Job {job_id}: Received text-to-speech request for text: {text[:50]}... (language: {language})"

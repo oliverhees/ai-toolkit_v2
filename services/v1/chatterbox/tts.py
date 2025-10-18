@@ -56,7 +56,7 @@ def get_chatterbox_model(model_type="english", device=None):
     return _model_cache[cache_key]
 
 
-def process_text_to_speech(text, job_id, language="en", emotion_intensity=1.0, model_type="english"):
+def process_text_to_speech(text, job_id, language="en", emotion_intensity=0.5, model_type="english"):
     """
     Convert text to speech using Chatterbox TTS.
 
@@ -81,12 +81,12 @@ def process_text_to_speech(text, job_id, language="en", emotion_intensity=1.0, m
         print(f"Generating speech for text: {text[:50]}... (language: {language}, model: {model_type})")
 
         # Generate audio waveform
-        # Only multilingual model supports language parameter
-        if model_type == "multilingual":
-            wav = model.generate(text, language=language)
+        # Only multilingual model supports language_id parameter
+        if model_type == "multilingual" and language:
+            wav = model.generate(text, language_id=language, exaggeration=emotion_intensity)
         else:
-            # English model doesn't accept language parameter
-            wav = model.generate(text)
+            # English model or no language specified
+            wav = model.generate(text, exaggeration=emotion_intensity)
 
         # Save audio file
         if isinstance(wav, torch.Tensor):
@@ -112,7 +112,7 @@ def process_text_to_speech(text, job_id, language="en", emotion_intensity=1.0, m
         raise
 
 
-def process_voice_cloning(text, voice_audio_url, job_id, language="en", emotion_intensity=1.0, model_type="multilingual"):
+def process_voice_cloning(text, voice_audio_url, job_id, language="en", emotion_intensity=0.5, model_type="multilingual"):
     """
     Clone a voice and generate speech using Chatterbox TTS.
 
@@ -153,11 +153,28 @@ def process_voice_cloning(text, voice_audio_url, job_id, language="en", emotion_
         print(f"Generating speech with voice cloning for text: {text[:50]}...")
 
         # Generate speech with voice cloning
-        wav = model.generate(
-            text,
-            reference_audio=reference_wav,
-            language=language if model_type == "multilingual" else None
-        )
+        # audio_prompt_path parameter expects a file path, not tensor
+        # Save reference audio temporarily
+        temp_ref_path = os.path.join(LOCAL_STORAGE_PATH, f"{job_id}_ref_temp.wav")
+        torchaudio.save(temp_ref_path, reference_wav, 24000)
+
+        if model_type == "multilingual" and language:
+            wav = model.generate(
+                text,
+                audio_prompt_path=temp_ref_path,
+                language_id=language,
+                exaggeration=emotion_intensity
+            )
+        else:
+            wav = model.generate(
+                text,
+                audio_prompt_path=temp_ref_path,
+                exaggeration=emotion_intensity
+            )
+
+        # Clean up temp file
+        if os.path.exists(temp_ref_path):
+            os.remove(temp_ref_path)
 
         # Save audio file
         if isinstance(wav, torch.Tensor):
