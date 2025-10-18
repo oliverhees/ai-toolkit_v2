@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ai-toolkit-2025",
+		"_postman_id": "12345678-1234-1234-1234-123456789abc",
 		"name": "AI Toolkit API - Complete Collection",
 		"description": "Complete API collection for AI Toolkit with all endpoints",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -41,11 +41,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{BASE_URL}}/v1/toolkit/test",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "toolkit", "test"]
-						},
+						"url": "{{BASE_URL}}/v1/toolkit/test",
 						"description": "Simple test endpoint to verify API is working"
 					}
 				},
@@ -54,20 +50,13 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"job_id\": \"your-job-id-here\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/toolkit/job/status",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "toolkit", "job", "status"]
-						}
+						"url": "{{BASE_URL}}/v1/toolkit/job/status"
 					}
 				}
 			]
@@ -80,20 +69,13 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"video_urls\": [\n    {\"video_url\": \"https://example.com/video1.mp4\"},\n    {\"video_url\": \"https://example.com/video2.mp4\"},\n    {\"video_url\": \"https://example.com/video3.mp4\"}\n  ],\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"my-custom-id\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/video/concatenate",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "video", "concatenate"]
-						},
+						"url": "{{BASE_URL}}/v1/video/concatenate",
 						"description": "Merge multiple videos into one"
 					}
 				},
@@ -102,20 +84,13 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"audio_url\": \"https://example.com/audio.mp3\",\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"my-custom-id\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/video/add_audio",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "video", "add_audio"]
-						},
+						"url": "{{BASE_URL}}/v1/video/add_audio",
 						"description": "Add or replace audio track in video"
 					}
 				},
@@ -124,20 +99,13 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"loop_count\": 10,\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"my-custom-id\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/video/loop",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "video", "loop"]
-						},
+						"url": "{{BASE_URL}}/v1/video/loop",
 						"description": "Loop a video file multiple times"
 					}
 				},
@@ -146,20 +114,13 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"start_time\": \"00:00:10\",\n  \"end_time\": \"00:01:30\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/video/trim",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "video", "trim"]
-						},
+						"url": "{{BASE_URL}}/v1/video/trim",
 						"description": "Trim video to specific time range"
 					}
 				},
@@ -168,43 +129,14 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"segment_duration\": 60,\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/video/split",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "video", "split"]
-						},
+						"url": "{{BASE_URL}}/v1/video/split",
 						"description": "Split video into segments"
-					}
-				},
-				{
-					"name": "Cut Video",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"cuts\": [\n    {\"start\": \"00:00:10\", \"end\": \"00:00:20\"},\n    {\"start\": \"00:01:00\", \"end\": \"00:01:10\"}\n  ],\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/video/cut",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "video", "cut"]
-						},
-						"description": "Remove specific segments from video"
 					}
 				},
 				{
@@ -212,43 +144,14 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"timestamp\": \"00:00:05\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/video/thumbnail",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "video", "thumbnail"]
-						},
+						"url": "{{BASE_URL}}/v1/video/thumbnail",
 						"description": "Generate thumbnail from video"
-					}
-				},
-				{
-					"name": "Add Captions",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"subtitle_url\": \"https://example.com/subtitles.srt\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/video/caption",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "video", "caption"]
-						},
-						"description": "Add captions to video"
 					}
 				}
 			]
@@ -261,20 +164,13 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"media_urls\": [\n    {\"audio_url\": \"https://example.com/song1.mp3\"},\n    {\"audio_url\": \"https://example.com/song2.mp3\"},\n    {\"audio_url\": \"https://example.com/song3.mp3\"}\n  ],\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"my-custom-id\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/audio/concatenate",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "audio", "concatenate"]
-						},
+						"url": "{{BASE_URL}}/v1/audio/concatenate",
 						"description": "Merge multiple audio files into one"
 					}
 				},
@@ -283,20 +179,13 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"audio_url\": \"https://example.com/audio.mp3\",\n  \"loop_count\": 5,\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"my-custom-id\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/audio/loop",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "audio", "loop"]
-						},
+						"url": "{{BASE_URL}}/v1/audio/loop",
 						"description": "Loop an audio file multiple times"
 					}
 				}
@@ -310,65 +199,14 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"media_url\": \"https://example.com/video.mp4\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/media/convert/mp3",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "media", "convert", "mp3"]
-						},
+						"url": "{{BASE_URL}}/v1/media/convert/mp3",
 						"description": "Extract audio from video as MP3"
-					}
-				},
-				{
-					"name": "Convert Media",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"media_url\": \"https://example.com/input.mp4\",\n  \"output_format\": \"webm\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/media/convert",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "media", "convert"]
-						},
-						"description": "Convert media to different format"
-					}
-				},
-				{
-					"name": "Add Silence",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"audio_url\": \"https://example.com/audio.mp3\",\n  \"duration\": 5.0,\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/media/silence",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "media", "silence"]
-						},
-						"description": "Add silence to beginning of audio"
 					}
 				},
 				{
@@ -376,20 +214,13 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"media_url\": \"https://example.com/video.mp4\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/media/metadata",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "media", "metadata"]
-						},
+						"url": "{{BASE_URL}}/v1/media/metadata",
 						"description": "Get media file metadata"
 					}
 				},
@@ -398,20 +229,13 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"media_url\": \"https://example.com/audio.mp3\",\n  \"language\": \"en\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/media/transcribe",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "media", "transcribe"]
-						},
+						"url": "{{BASE_URL}}/v1/media/transcribe",
 						"description": "Transcribe audio/video to text using Whisper"
 					}
 				}
@@ -425,20 +249,13 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"text\": \"Hello! Welcome to our AI-powered text-to-speech service.\",\n  \"language\": \"en\",\n  \"model_type\": \"english\",\n  \"emotion_intensity\": 1.0,\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"tts-request-123\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/chatterbox/text-to-speech",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "chatterbox", "text-to-speech"]
-						},
+						"url": "{{BASE_URL}}/v1/chatterbox/text-to-speech",
 						"description": "Convert text to speech (23 languages)"
 					}
 				},
@@ -447,124 +264,14 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{"key": "Content-Type", "value": "application/json"}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"text\": \"This is my cloned voice speaking!\",\n  \"voice_audio_url\": \"https://example.com/reference-voice.wav\",\n  \"language\": \"en\",\n  \"model_type\": \"multilingual\",\n  \"emotion_intensity\": 1.0,\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/chatterbox/voice-cloning",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "chatterbox", "voice-cloning"]
-						},
+						"url": "{{BASE_URL}}/v1/chatterbox/voice-cloning",
 						"description": "Clone a voice from audio sample"
-					}
-				}
-			]
-		},
-		{
-			"name": "Image",
-			"item": [
-				{
-					"name": "Screenshot Webpage",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"url\": \"https://example.com\",\n  \"viewport_width\": 1920,\n  \"viewport_height\": 1080,\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/image/screenshot/webpage",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "image", "screenshot", "webpage"]
-						},
-						"description": "Take screenshot of webpage"
-					}
-				},
-				{
-					"name": "Image to Video",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"image_url\": \"https://example.com/image.jpg\",\n  \"duration\": 5,\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/image/convert/video",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "image", "convert", "video"]
-						},
-						"description": "Convert static image to video"
-					}
-				}
-			]
-		},
-		{
-			"name": "FFmpeg",
-			"item": [
-				{
-					"name": "FFmpeg Compose",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"inputs\": [\n    {\"file_url\": \"https://example.com/input.mp4\"}\n  ],\n  \"outputs\": [\n    {\n      \"options\": [\n        {\"option\": \"-f\", \"argument\": \"mp4\"},\n        {\"option\": \"-c:v\", \"argument\": \"libx264\"}\n      ]\n    }\n  ],\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/ffmpeg/compose",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "ffmpeg", "compose"]
-						},
-						"description": "Advanced FFmpeg operations with custom parameters"
-					}
-				}
-			]
-		},
-		{
-			"name": "Storage",
-			"item": [
-				{
-					"name": "Upload to S3",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"file_url\": \"https://example.com/file.mp4\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/v1/s3/upload",
-							"host": ["{{BASE_URL}}"],
-							"path": ["v1", "s3", "upload"]
-						},
-						"description": "Upload file to configured cloud storage"
 					}
 				}
 			]
