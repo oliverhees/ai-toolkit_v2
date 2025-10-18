@@ -1,25 +1,276 @@
 {
 	"info": {
-		"_postman_id": "12345678-1234-1234-1234-123456789abc",
-		"name": "AI Toolkit API - Complete Collection",
-		"description": "Complete API collection for AI Toolkit with all endpoints",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "AI Toolkit API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12345678"
 	},
-	"auth": {
-		"type": "apikey",
-		"apikey": [
-			{
-				"key": "value",
-				"value": "{{API_KEY}}",
-				"type": "string"
-			},
-			{
-				"key": "key",
-				"value": "X-API-Key",
-				"type": "string"
-			}
-		]
-	},
+	"item": [
+		{
+			"name": "Video",
+			"item": [
+				{
+					"name": "Concatenate Videos",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{API_KEY}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-Key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"video_urls\": [\n    {\"video_url\": \"https://example.com/video1.mp4\"},\n    {\"video_url\": \"https://example.com/video2.mp4\"}\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/v1/video/concatenate",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"video",
+								"concatenate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Audio to Video",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{API_KEY}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-Key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"audio_url\": \"https://example.com/audio.mp3\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/v1/video/add_audio",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"video",
+								"add_audio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Loop Video",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{API_KEY}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-Key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"loop_count\": 10\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/v1/video/loop",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"video",
+								"loop"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Audio",
+			"item": [
+				{
+					"name": "Concatenate Audio",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{API_KEY}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-Key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"media_urls\": [\n    {\"audio_url\": \"https://example.com/song1.mp3\"},\n    {\"audio_url\": \"https://example.com/song2.mp3\"}\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/v1/audio/concatenate",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"audio",
+								"concatenate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Loop Audio",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{API_KEY}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-Key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"audio_url\": \"https://example.com/audio.mp3\",\n  \"loop_count\": 5\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/v1/audio/loop",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"audio",
+								"loop"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Toolkit",
+			"item": [
+				{
+					"name": "Test API",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{API_KEY}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-Key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/v1/toolkit/test",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v1",
+								"toolkit",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
 	"variable": [
 		{
 			"key": "BASE_URL",
@@ -30,251 +281,6 @@
 			"key": "API_KEY",
 			"value": "your-api-key-here",
 			"type": "string"
-		}
-	],
-	"item": [
-		{
-			"name": "Toolkit",
-			"item": [
-				{
-					"name": "Test API",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "{{BASE_URL}}/v1/toolkit/test",
-						"description": "Simple test endpoint to verify API is working"
-					}
-				},
-				{
-					"name": "Get Job Status",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"job_id\": \"your-job-id-here\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/toolkit/job/status"
-					}
-				}
-			]
-		},
-		{
-			"name": "Video",
-			"item": [
-				{
-					"name": "Concatenate Videos",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"video_urls\": [\n    {\"video_url\": \"https://example.com/video1.mp4\"},\n    {\"video_url\": \"https://example.com/video2.mp4\"},\n    {\"video_url\": \"https://example.com/video3.mp4\"}\n  ],\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"my-custom-id\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/video/concatenate",
-						"description": "Merge multiple videos into one"
-					}
-				},
-				{
-					"name": "Add Audio to Video",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"audio_url\": \"https://example.com/audio.mp3\",\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"my-custom-id\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/video/add_audio",
-						"description": "Add or replace audio track in video"
-					}
-				},
-				{
-					"name": "Loop Video",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"loop_count\": 10,\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"my-custom-id\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/video/loop",
-						"description": "Loop a video file multiple times"
-					}
-				},
-				{
-					"name": "Trim Video",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"start_time\": \"00:00:10\",\n  \"end_time\": \"00:01:30\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/video/trim",
-						"description": "Trim video to specific time range"
-					}
-				},
-				{
-					"name": "Split Video",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"segment_duration\": 60,\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/video/split",
-						"description": "Split video into segments"
-					}
-				},
-				{
-					"name": "Generate Thumbnail",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"video_url\": \"https://example.com/video.mp4\",\n  \"timestamp\": \"00:00:05\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/video/thumbnail",
-						"description": "Generate thumbnail from video"
-					}
-				}
-			]
-		},
-		{
-			"name": "Audio",
-			"item": [
-				{
-					"name": "Concatenate Audio",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"media_urls\": [\n    {\"audio_url\": \"https://example.com/song1.mp3\"},\n    {\"audio_url\": \"https://example.com/song2.mp3\"},\n    {\"audio_url\": \"https://example.com/song3.mp3\"}\n  ],\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"my-custom-id\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/audio/concatenate",
-						"description": "Merge multiple audio files into one"
-					}
-				},
-				{
-					"name": "Loop Audio",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"audio_url\": \"https://example.com/audio.mp3\",\n  \"loop_count\": 5,\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"my-custom-id\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/audio/loop",
-						"description": "Loop an audio file multiple times"
-					}
-				}
-			]
-		},
-		{
-			"name": "Media",
-			"item": [
-				{
-					"name": "Convert to MP3",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"media_url\": \"https://example.com/video.mp4\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/media/convert/mp3",
-						"description": "Extract audio from video as MP3"
-					}
-				},
-				{
-					"name": "Get Metadata",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"media_url\": \"https://example.com/video.mp4\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/media/metadata",
-						"description": "Get media file metadata"
-					}
-				},
-				{
-					"name": "Transcribe Media",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"media_url\": \"https://example.com/audio.mp3\",\n  \"language\": \"en\",\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/media/transcribe",
-						"description": "Transcribe audio/video to text using Whisper"
-					}
-				}
-			]
-		},
-		{
-			"name": "Chatterbox TTS",
-			"item": [
-				{
-					"name": "Text-to-Speech",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"text\": \"Hello! Welcome to our AI-powered text-to-speech service.\",\n  \"language\": \"en\",\n  \"model_type\": \"english\",\n  \"emotion_intensity\": 1.0,\n  \"webhook_url\": \"https://your-app.com/webhook\",\n  \"id\": \"tts-request-123\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/chatterbox/text-to-speech",
-						"description": "Convert text to speech (23 languages)"
-					}
-				},
-				{
-					"name": "Voice Cloning",
-					"request": {
-						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"text\": \"This is my cloned voice speaking!\",\n  \"voice_audio_url\": \"https://example.com/reference-voice.wav\",\n  \"language\": \"en\",\n  \"model_type\": \"multilingual\",\n  \"emotion_intensity\": 1.0,\n  \"webhook_url\": \"https://your-app.com/webhook\"\n}"
-						},
-						"url": "{{BASE_URL}}/v1/chatterbox/voice-cloning",
-						"description": "Clone a voice from audio sample"
-					}
-				}
-			]
 		}
 	]
 }
