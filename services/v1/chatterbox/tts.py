@@ -47,6 +47,19 @@ def get_chatterbox_model(model_type="english", device=None):
 
     if cache_key not in _model_cache:
         try:
+            # Patch torch.load to handle CPU-only environments
+            # Models were trained on CUDA and need map_location for CPU
+            map_location = torch.device(device)
+            torch_load_original = torch.load
+
+            def patched_torch_load(*args, **kwargs):
+                if 'map_location' not in kwargs:
+                    kwargs['map_location'] = map_location
+                return torch_load_original(*args, **kwargs)
+
+            torch.load = patched_torch_load
+
+            # Load model with patched torch.load
             if model_type == "multilingual":
                 from chatterbox.mtl_tts import ChatterboxMultilingualTTS
                 _model_cache[cache_key] = ChatterboxMultilingualTTS.from_pretrained(device=device)
@@ -55,7 +68,13 @@ def get_chatterbox_model(model_type="english", device=None):
                 from chatterbox.tts import ChatterboxTTS
                 _model_cache[cache_key] = ChatterboxTTS.from_pretrained(device=device)
                 print(f"Chatterbox TTS model loaded on {device}")
+
+            # Restore original torch.load
+            torch.load = torch_load_original
+
         except Exception as e:
+            # Restore original torch.load in case of error
+            torch.load = torch_load_original
             raise Exception(f"Failed to load Chatterbox model: {str(e)}")
 
     return _model_cache[cache_key]
