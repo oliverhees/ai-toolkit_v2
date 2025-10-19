@@ -679,6 +679,190 @@ paths:
         '500':
           description: Internal Server Error
 
+  /v1/media/transcribe:
+    post:
+      tags:
+        - Audio
+      summary: Transcribe or translate audio/video
+      description: |
+        Transcribe audio/video to text or translate to English using OpenAI Whisper.
+
+        **Powered by:** OpenAI Whisper (open-source, runs locally)
+
+        **Model:** Whisper Base (fast, good quality)
+
+        **Features:**
+        - **Transcribe** - Convert speech to text in original language
+        - **Translate** - Convert speech to English text
+        - **Multiple output formats** - Text, SRT subtitles, JSON segments
+        - **Word-level timestamps** - Precise timing for each word
+        - **Custom SRT formatting** - Control words per subtitle line
+        - **Language detection** - Auto-detect or specify language
+        - **Direct or cloud response** - Get results inline or via cloud URL
+
+        **Supported Languages:**
+        Afrikaans, Arabic, Armenian, Azerbaijani, Belarusian, Bosnian, Bulgarian, Catalan, Chinese, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, French, Galician, German, Greek, Hebrew, Hindi, Hungarian, Icelandic, Indonesian, Italian, Japanese, Kannada, Kazakh, Korean, Latvian, Lithuanian, Macedonian, Malay, Marathi, Maori, Nepali, Norwegian, Persian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swahili, Swedish, Tagalog, Tamil, Thai, Turkish, Ukrainian, Urdu, Vietnamese, Welsh
+
+        **Use Cases:**
+        - Generate subtitles from video
+        - Transcribe podcast episodes
+        - Translate foreign language content to English
+        - Create searchable text from audio
+        - Generate SRT files for video editing
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - media_url
+              properties:
+                media_url:
+                  type: string
+                  format: uri
+                  example: "https://example.com/audio.mp3"
+                  description: URL of audio or video file to transcribe
+                task:
+                  type: string
+                  enum: [transcribe, translate]
+                  default: transcribe
+                  example: "transcribe"
+                  description: |
+                    Task to perform:
+                    - transcribe: Convert to text in original language
+                    - translate: Convert to English text
+                language:
+                  type: string
+                  example: "de"
+                  description: |
+                    Language code (ISO 639-1):
+                    en, de, fr, es, it, pt, ja, zh, ko, ru, ar, hi, etc.
+                    If not specified, language is auto-detected
+                include_text:
+                  type: boolean
+                  default: true
+                  example: true
+                  description: Include plain text transcript in response
+                include_srt:
+                  type: boolean
+                  default: false
+                  example: true
+                  description: Include SRT subtitle file
+                include_segments:
+                  type: boolean
+                  default: false
+                  example: false
+                  description: Include JSON with timestamped segments
+                word_timestamps:
+                  type: boolean
+                  default: false
+                  example: false
+                  description: Enable word-level timestamps (more precise)
+                words_per_line:
+                  type: integer
+                  minimum: 1
+                  example: 8
+                  description: |
+                    Number of words per SRT subtitle line.
+                    Only used when include_srt is true.
+                    If not specified, one subtitle per natural segment.
+                response_type:
+                  type: string
+                  enum: [direct, cloud]
+                  default: direct
+                  example: "direct"
+                  description: |
+                    Response format:
+                    - direct: Return text/SRT directly in JSON response
+                    - cloud: Upload to storage and return URLs
+                webhook_url:
+                  type: string
+                  format: uri
+                  example: "https://your-app.com/webhook"
+                  description: Optional webhook URL for async processing
+                id:
+                  type: string
+                  example: "transcribe-job-123"
+                  description: Custom identifier for tracking
+      responses:
+        '200':
+          description: Success - Transcription completed
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    title: Direct Response
+                    properties:
+                      code:
+                        type: integer
+                        example: 200
+                      response:
+                        type: object
+                        properties:
+                          text:
+                            type: string
+                            example: "This is the transcribed text from the audio."
+                            description: Transcribed text (if include_text=true)
+                          srt:
+                            type: string
+                            example: "1\n00:00:00,000 --> 00:00:05,000\nThis is the transcribed text\n\n2\n00:00:05,000 --> 00:00:10,000\nfrom the audio."
+                            description: SRT subtitle content (if include_srt=true)
+                          segments:
+                            type: array
+                            description: Timestamped segments (if include_segments=true)
+                            items:
+                              type: object
+                              properties:
+                                start:
+                                  type: number
+                                  example: 0.0
+                                end:
+                                  type: number
+                                  example: 5.0
+                                text:
+                                  type: string
+                                  example: "This is the transcribed text"
+                  - type: object
+                    title: Cloud Response
+                    properties:
+                      code:
+                        type: integer
+                        example: 200
+                      response:
+                        type: object
+                        properties:
+                          text_url:
+                            type: string
+                            format: uri
+                            example: "https://ai-toolkit.fra1.digitaloceanspaces.com/transcript.txt"
+                            description: URL to text file
+                          srt_url:
+                            type: string
+                            format: uri
+                            example: "https://ai-toolkit.fra1.digitaloceanspaces.com/subtitles.srt"
+                            description: URL to SRT file
+                          segments_url:
+                            type: string
+                            format: uri
+                            example: "https://ai-toolkit.fra1.digitaloceanspaces.com/segments.json"
+                            description: URL to segments JSON
+        '202':
+          description: Accepted for async processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncResponse'
+        '400':
+          description: Bad Request - Invalid parameters
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+
   /v1/chatterbox/text-to-speech:
     post:
       tags:
