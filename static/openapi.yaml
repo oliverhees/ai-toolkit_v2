@@ -863,6 +863,192 @@ paths:
         '500':
           description: Internal Server Error
 
+  /v1/video/add-tts-with-captions:
+    post:
+      tags:
+        - Video
+      summary: Add TTS audio + karaoke captions (all-in-one)
+      description: |
+        **Complete TikTok-style video creation workflow in ONE request!**
+
+        This endpoint combines 3 steps into one:
+        1. **Generate TTS audio** from your text (23 languages)
+        2. **Add audio** to your silent video
+        3. **Add synchronized karaoke captions** matching the TTS timing
+
+        **Perfect for:**
+        - TikTok/Reels style videos with text-to-speech
+        - Educational content with synchronized narration + subtitles
+        - Automated video creation workflows
+        - Multi-language video localization
+
+        **Default Style:** TikTok-style karaoke
+        - White text with yellow word highlighting
+        - Bottom center position
+        - Bold Arial 32px font
+        - Black outline for readability
+
+        **What you need:**
+        - Silent video (or video where audio will be replaced)
+        - Text to convert to speech
+        - Language selection
+
+        **What you get:**
+        - Video with TTS audio + perfectly synchronized karaoke captions
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - video_url
+                - text
+              properties:
+                video_url:
+                  type: string
+                  format: uri
+                  example: "https://example.com/silent-video.mp4"
+                  description: URL of the video file (without audio or audio will be replaced)
+                text:
+                  type: string
+                  minLength: 1
+                  maxLength: 5000
+                  example: "Willkommen zu diesem Tutorial. Heute zeige ich dir wie das funktioniert."
+                  description: Text to convert to speech (also used for captions)
+                language:
+                  type: string
+                  default: "de"
+                  example: "de"
+                  description: Language code (en, de, fr, es, it, pt, ja, zh, ko, etc.)
+                emotion_intensity:
+                  type: number
+                  format: float
+                  minimum: 0.25
+                  maximum: 2.0
+                  default: 0.5
+                  example: 0.7
+                  description: TTS emotion level (0.5=neutral, higher=more expressive)
+                model_type:
+                  type: string
+                  enum: [english, multilingual]
+                  default: "multilingual"
+                  example: "multilingual"
+                  description: TTS model (use multilingual for non-English)
+                caption_settings:
+                  type: object
+                  description: |
+                    Optional caption customization.
+                    If not provided, uses TikTok-style defaults:
+                    - karaoke style with white text, yellow highlight
+                    - bottom center position
+                    - Arial bold 32px
+                  properties:
+                    style:
+                      type: string
+                      enum: [classic, karaoke, highlight, underline, word_by_word]
+                      default: karaoke
+                      example: "karaoke"
+                      description: Caption animation style
+                    position:
+                      type: string
+                      enum: [
+                        bottom_left, bottom_center, bottom_right,
+                        middle_left, middle_center, middle_right,
+                        top_left, top_center, top_right
+                      ]
+                      default: bottom_center
+                      example: "bottom_center"
+                    line_color:
+                      type: string
+                      default: "#FFFFFF"
+                      example: "#FFFFFF"
+                      description: Main text color (hex)
+                    word_color:
+                      type: string
+                      default: "#FFFF00"
+                      example: "#FFFF00"
+                      description: Highlighted word color (hex)
+                    outline_color:
+                      type: string
+                      default: "#000000"
+                      example: "#000000"
+                      description: Text outline color (hex)
+                    font_family:
+                      type: string
+                      default: "Arial"
+                      example: "Arial"
+                    font_size:
+                      type: integer
+                      default: 32
+                      example: 36
+                    bold:
+                      type: boolean
+                      default: true
+                    outline_width:
+                      type: integer
+                      default: 3
+                      example: 3
+                    all_caps:
+                      type: boolean
+                      default: false
+                    max_words_per_line:
+                      type: integer
+                      default: 8
+                      example: 10
+                replace:
+                  type: array
+                  description: Remove filler words from captions
+                  items:
+                    type: object
+                    properties:
+                      find:
+                        type: string
+                        example: "ähm"
+                      replace:
+                        type: string
+                        example: ""
+                  example:
+                    - find: "ähm"
+                      replace: ""
+                    - find: "äh"
+                      replace: ""
+                webhook_url:
+                  type: string
+                  format: uri
+                  example: "https://your-app.com/webhook"
+                  description: Optional webhook for async processing
+                id:
+                  type: string
+                  example: "tiktok-video-123"
+                  description: Custom tracking identifier
+      responses:
+        '200':
+          description: Success - Video with TTS + captions created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                code: 200
+                response: "https://ai-toolkit.fra1.digitaloceanspaces.com/final_video.mp4"
+                message: "success"
+                run_time: 45.2
+        '202':
+          description: Accepted for async processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+
   /v1/chatterbox/text-to-speech:
     post:
       tags:
