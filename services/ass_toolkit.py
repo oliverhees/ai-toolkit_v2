@@ -796,10 +796,15 @@ def generate_ass_captions_v1(video_url, captions, settings, replace, exclude_tim
         else:
             captions_content = None
 
-        # Download the video
+        # Download the video (or use local path if already local)
         try:
-            video_path = download_file(video_url, LOCAL_STORAGE_PATH)
-            logger.info(f"Job {job_id}: Video downloaded to {video_path}")
+            # Check if video_url is a local file path
+            if os.path.exists(video_url):
+                video_path = video_url
+                logger.info(f"Job {job_id}: Using local video file: {video_path}")
+            else:
+                video_path = download_file(video_url, LOCAL_STORAGE_PATH)
+                logger.info(f"Job {job_id}: Video downloaded to {video_path}")
         except Exception as e:
             logger.error(f"Job {job_id}: Video download error: {str(e)}")
             # For non-font errors, do NOT include available_fonts

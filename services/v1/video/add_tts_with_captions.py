@@ -124,19 +124,35 @@ def process_add_tts_with_captions(
             exclude_time_ranges = []
 
         # Generate ASS captions file
-        ass_path = generate_ass_captions_v1(
-            video_url=video_with_audio_path,  # Use local path, not URL
+        # Note: generate_ass_captions_v1 expects a URL and will download it
+        # So we need to use the cloud URL if available, or upload temp file
+        # For now, we'll use the local path and the function will handle it
+        # Actually, let's upload to cloud storage first so we have a URL
+        from services.cloud_storage import upload_file as temp_upload
+        temp_video_url = temp_upload(video_with_audio_path)
+        print(f"Uploaded temp video for captioning: {temp_video_url}")
+
+        ass_result = generate_ass_captions_v1(
+            video_url=temp_video_url,  # Use URL so it can be downloaded
             captions=None,  # Let it auto-transcribe
             settings=caption_settings,
             replace=replace,
             exclude_time_ranges=exclude_time_ranges,
-            job_id=job_id,
+            job_id=f"{job_id}_caption",  # Different job_id to avoid conflicts
             language=language
         )
 
-        if isinstance(ass_path, dict) and 'error' in ass_path:
-            raise Exception(f"Caption generation failed: {ass_path['error']}")
+        # Check if caption generation returned an error
+        if isinstance(ass_result, dict):
+            if 'error' in ass_result:
+                error_msg = ass_result['error']
+                if 'available_fonts' in ass_result:
+                    error_msg += f". Available fonts: {', '.join(ass_result['available_fonts'][:10])}"
+                raise Exception(f"Caption generation failed: {error_msg}")
+            else:
+                raise Exception(f"Unexpected dict result from caption generation: {ass_result}")
 
+        ass_path = ass_result
         print(f"ASS captions generated: {ass_path}")
 
         # Step 5: Render video with captions

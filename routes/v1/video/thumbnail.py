@@ -32,7 +32,11 @@ logger = logging.getLogger(__name__)
     "type": "object",
     "properties": {
         "video_url": {"type": "string", "format": "uri"},
-        "second": {"type": "number", "minimum": 0},
+        "second": {
+            "type": "number",
+            "minimum": -1,
+            "description": "Timestamp in seconds (0=first frame, -1=last frame)"
+        },
         "webhook_url": {"type": "string", "format": "uri"},
         "id": {"type": "string"}
     },
